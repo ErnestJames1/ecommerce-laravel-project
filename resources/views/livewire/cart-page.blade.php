@@ -27,13 +27,13 @@
                   <td class="py-4">{{ Number::currency($item['unit_amount']) }}</td>
                   <td class="py-4">
                     <div class="flex items-center">
-                      <button wire:click.="decreaseQty({{ $item['product_id'] }})"class="border rounded-md py-2 px-4 mr-2">-</button>
+                      <button wire:click.prevent="decreaseQty({{ $item['product_id'] }})"class="border rounded-md py-2 px-4 mr-2" type="button">-</button>
                       <span class="text-center w-8">{{ $item['quantity'] }}</span>
-                      <button wire:click.="increaseQty({{ $item['product_id'] }})" class="border rounded-md py-2 px-4 ml-2">+</button>
+                      <button wire:click.prevent="increaseQty({{ $item['product_id'] }})" class="border rounded-md py-2 px-4 ml-2" type="button">+</button>
                     </div>
                   </td>
                   <td class="py-4">{{ Number::currency($item['total_amount']) }}</td>
-                  <td><button wire:click="removeItem({{ $item['product_id'] }})" class="bg-slate-300 border-2 border-slate-400 rounded-lg px-3 py-1 hover:bg-red-500 hover:text-white hover:border-red-700">
+                  <td><button wire:click="removeItem({{ $item['product_id'] }})" class="bg-slate-300 border-2 border-slate-400 rounded-lg px-3 py-1 hover:bg-red-500 hover:text-white hover:border-red-700" type="button">
                     <span wire:loading.remove wire:target="removeItem({{ $item['product_id'] }})">Remove</span>
                     <span wire:loading wire:target="removeItem({{ $item['product_id'] }})">Removing...</span></button></td>
                 </tr>

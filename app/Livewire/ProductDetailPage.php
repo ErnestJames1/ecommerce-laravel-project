@@ -15,7 +15,7 @@ class ProductDetailPage extends Component
 
     public $slug;
 
-    public $quantity = 1;
+    public int $quantity = 1;
 
     public function mount($slug)
     {
