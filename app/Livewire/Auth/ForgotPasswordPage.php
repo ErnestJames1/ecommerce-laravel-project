@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Livewire\Auth;
+
+use Illuminate\Support\Facades\Password;
+use Livewire\Attributes\Title;
+use Livewire\Component;
+use Illuminate\Validation\Rule;
+
+
+#[Title('Forgot Password')]
+class ForgotPasswordPage extends Component
+{
+
+    public $email;
+
+    public function save()
+    {
+        // dd([
+        // 'typed' => $this->email,
+        // 'trimmed' => trim((string) $this->email),
+        // 'db_default' => config('database.default'),
+        // 'exists' => \App\Models\User::where('email', trim((string)$this->email))->exists(),
+        // ]);
+
+        $this->email = trim((string) $this->email);
+        // $this->validate([
+        //     'email' => 'required|email|exists:users, email|max:255'
+        // ]);
+        $this->validate([
+        'email' => ['required', 'email', Rule::exists('users', 'email')],
+        ]);
+
+        // $status = Password::sendResetLink(['email' => $this->email]);
+        $status = Password::broker('users')->sendResetLink([
+            'email' => $this->email,
+        ]);
+
+        if($status == Password::RESET_LINK_SENT)
+        {
+            session()->flash('success', 'Password reset link has been sent to your email address!');
+            $this->email = '';
+        }
+    }
+
+    public function render()
+    {
+        return view('livewire.auth.forgot-password-page');
+    }
+}
